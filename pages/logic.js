@@ -28,7 +28,7 @@ export default {
     async getLog() {
       let log = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: this.googs.spreadsheet,
-        range: 'hours!A:A'
+        range: 'hours!A2:A'
       })
       this.log = log.result.values
     },
@@ -38,7 +38,7 @@ export default {
     async getemployees() {
       const ssData = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: this.googs.spreadsheet,
-        range: 'workers!A:A'
+        range: 'workers!A2:A'
       })
 
       this.employees = ssData.result.values.map(cell => cell[0])
@@ -70,7 +70,7 @@ export default {
       if (!this.employee) return (this.error = 'Please select your name!')
       this.error = ''
       this.loading = true
-      const inputRow = this.log.length + 1
+      const inputRow = this.log.length + 2
       const values = [[this.employee, this.signin ? 'in' : 'out', Date.now()]]
       const params = {
         spreadsheetId: this.googs.spreadsheet,

@@ -4,7 +4,7 @@
     <Spinner v-if="loading && !success" />
 
     <div v-if="!authenticated" class="absolute w-full h-full inset-0 flex justify-center items-center" style="background:rgba(300,300,300,.95)" >
-      <div class="rounded py-2 cursor-pointer border border-purple-300 px-4 bg-white opacity-100 shadow-md rounded text-md hover:shadow-lg" @click="authenticate">
+      <div class="rounded py-2 cursor-pointer border border-purple-300 px-8 bg-white opacity-100 shadow-md rounded text-md hover:shadow-lg" @click="authenticate">
         Sign In!
       </div>
     </div>

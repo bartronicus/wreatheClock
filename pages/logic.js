@@ -62,7 +62,8 @@ export default {
             this.getLog()
           },
           error => {
-            alert(error)
+            alert(error);
+            console.log(error);
           }
         )
     },

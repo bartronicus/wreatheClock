@@ -16,5 +16,6 @@ export default {
     log: [],
     employees: [],
     success: false,
-    loading: false
+    loading: false,
+    activeTab: 'clock',
   }

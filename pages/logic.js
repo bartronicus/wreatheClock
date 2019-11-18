@@ -1,16 +1,26 @@
 import Spinner from '~/components/Spinner.vue'
 import Success from '~/components/Success.vue'
+import Nav from '~/components/Nav.vue'
+import Hours from '~/components/Hours.vue'
+import Active from "~/components/Active.vue"
+
 import dataModel from './dataModel.js'
 
 export default {
   components: {
+    Active,
     Spinner,
-    Success
+    Nav,
+    Success,
+    Hours
   },
   data() {
     return dataModel
   },
   computed: {
+    selectionMade () {
+      return this.employees.filter(e => e === this.employee).length;
+    },
     signin() {
       if (!this.employee) return false
       const count = this.log.filter(e => e[0] === this.employee).length
@@ -25,10 +35,14 @@ export default {
     // this.getLog();
   },
   methods: {
+    setNav (v) {
+      this.getLog();
+      this.activeTab = v;
+    },
     async getLog() {
       let log = await gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: this.googs.spreadsheet,
-        range: 'hours!A2:A'
+        range: 'hours!A2:C'
       })
       this.log = log.result.values
     },
@@ -53,16 +67,17 @@ export default {
         })
         .then(
           () => {
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
             gapi.auth2.getAuthInstance().isSignedIn.listen()
             const isAuthenticated = gapi.auth2
               .getAuthInstance()
-              .isSignedIn.get()
-            this.authenticated = isAuthenticated
+              .isSignedIn.get()            
+            var updateSigninStatus = (status) => this.authenticated = status;
+            updateSigninStatus(isAuthenticated)
             this.getemployees()
             this.getLog()
           },
-          error => {
-            alert(error);
+          error => {            
             console.log(error);
           }
         )
